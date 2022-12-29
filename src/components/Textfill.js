@@ -17,7 +17,7 @@ export default function Textfill() {
 
   const [text,settext]= useState()
   return (
-  <div>
+    <div className="container my-3" >
     <div className="mb-3">
       <h1> Enter the text</h1>
       <textarea className="form-control" value ={text} onChange={handleonchange} id="mybox" rows= "8" ></textarea>

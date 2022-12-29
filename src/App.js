@@ -3,8 +3,7 @@ import Textfill from './components/Textfill';
 import Navbar from './components/Navbar';
 import About from './components/About';
 import SectionLayout from './components/SectionLayout';
-// import { BrowserRouter, Route,Routes } from "react-router-dom";
-import React from 'react';
+import React,{useState} from 'react';
 // import ReactDOM from "react-dom/client"
 import {
   BrowserRouter as Router,
@@ -14,14 +13,25 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const [mode,setMode]= useState('dark')
+  const toggleMode =()=>{
+    if(mode=='light'){
+      setMode('dark');
+      document.body.style.backgroundColor='grey'
+    }
+    else{
+      setMode('light');
+      document.body.style.backgroundColor='white'
+    }
+  }
   return (
     <>
     <Router>
-    <Navbar/>
+    <Navbar mode={mode} toggleMode={toggleMode}/>
    <div className="container">
     <Routes>
           <Route element={<SectionLayout />}>
-          <Route path='/' element={<Textfill />} />
+          <Route path='/' element={<Textfill mode={mode}/>} />
     <Route path='/about' element={<About />} />
           </Route>
     </Routes>
