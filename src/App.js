@@ -11,6 +11,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Table from './components/Table';
 
 function App() {
   const [mode,setMode]= useState('dark')
@@ -28,11 +29,14 @@ function App() {
     <>
     <Router>
     <Navbar mode={mode} toggleMode={toggleMode}/>
+   
+
    <div className="container">
     <Routes>
           <Route element={<SectionLayout />}>
           <Route path='/' element={<Textfill mode={mode}/>} />
     <Route path='/about' element={<About />} />
+    <Route path='/database' element={<Table/>} />
           </Route>
     </Routes>
   </div>
