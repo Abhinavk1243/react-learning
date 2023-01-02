@@ -1,9 +1,11 @@
 import React,{useEffect,useState} from 'react';
 
 
-export default function Table(props) {
+export default function Admin(props) {
     
     const [jsonData,setJson]=useState([]);
+    const [key,setKey] =useState([]);
+
     useEffect(() => {
       
       fetch('https://reqres.in/api/users?page=2')
@@ -11,7 +13,8 @@ export default function Table(props) {
       .then(json => setJson(json['data']));
       }, []);    
       
-      
+      setKey(Object.keys({jsonData}['jsonData'][0]));
+      console.log({key})
       
     const getHeader=()=>{return (
       <>
@@ -19,10 +22,10 @@ export default function Table(props) {
               const arr = [];
               
               if ({jsonData}['jsonData'].length !=0){
-              const key = Object.keys({jsonData}['jsonData'][0]);
               
-              for(let j=0;j<key.length;j++) {
-                if(key[j]!='undefineed'){
+              console.log({key});
+              for(let j=0;j<{key}.length;j++) {
+                if({key}[j]!='undefineed'){
                   // console.log(key[j])
                   arr.push( <th scope="col">{key[j]}</th>)
                 }

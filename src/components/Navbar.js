@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export default function Navbar(props) {
-  console.log(props.mode)
+  // console.log(props.mode)
   return (
     <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
     <div className="container-fluid">
@@ -26,7 +26,7 @@ export default function Navbar(props) {
               <li><a className="dropdown-item" href="/">{props.item1}</a></li>
               <li><a className="dropdown-item" href="/database">table</a></li>
               <li><hr className="dropdown-divider"/></li>
-              <li><a className="dropdown-item" href="/">Something else here</a></li>
+              <li><a className="dropdown-item" href="/testapi">testai</a></li>
             </ul>
           </li>
           <li className="nav-item">

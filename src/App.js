@@ -3,6 +3,7 @@ import Textfill from './components/Textfill';
 import Navbar from './components/Navbar';
 import About from './components/About';
 import SectionLayout from './components/SectionLayout';
+import Admin from './components/Admin';
 import React,{useState} from 'react';
 // import ReactDOM from "react-dom/client"
 import {
@@ -36,7 +37,8 @@ function App() {
           <Route element={<SectionLayout />}>
           <Route path='/' element={<Textfill mode={mode}/>} />
     <Route path='/about' element={<About />} />
-    <Route path='/database' element={<Table/>} />
+    <Route path='/database' element={<Table />} />
+    <Route path='/testapi' element={<Admin />} />
           </Route>
     </Routes>
   </div>
