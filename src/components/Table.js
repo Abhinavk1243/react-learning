@@ -4,14 +4,17 @@ import React,{useEffect,useState} from 'react';
 export default function Table(props) {
     
     const [jsonData,setJson]=useState([]);
+    
     useEffect(() => {
       
       fetch('https://reqres.in/api/users?page=2')
       .then(response => response.json())
       .then(json => setJson(json['data']));
+      
+      // console.log({jsonData});
       }, []);    
       
-      
+       
       
     const getHeader=()=>{return (
       <>
@@ -87,9 +90,7 @@ return (
   </tr>
   </thead>
   <tbody>
-  
-  {createTable()}
- 
+  {createTable()} 
   </tbody>
   </table> 
   </div> 

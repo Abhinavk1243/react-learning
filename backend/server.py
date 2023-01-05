@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 # Route for seeing a data
-@app.route('/data')
+@app.route('/data/')
 def get_time():
 
 	# Returning an api for showing in reactjs

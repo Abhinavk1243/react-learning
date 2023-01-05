@@ -5,6 +5,7 @@ import About from './components/About';
 import SectionLayout from './components/SectionLayout';
 import Admin from './components/Admin';
 import React,{useState} from 'react';
+import Form from './components/Form';
 // import ReactDOM from "react-dom/client"
 import {
   BrowserRouter as Router,
@@ -37,7 +38,7 @@ function App() {
           <Route element={<SectionLayout />}>
           <Route path='/' element={<Textfill mode={mode}/>} />
     <Route path='/about' element={<About />} />
-    <Route path='/database' element={<Table />} />
+    <Route path='/form' element={<Form />} />
     <Route path='/testapi' element={<Admin />} />
           </Route>
     </Routes>
