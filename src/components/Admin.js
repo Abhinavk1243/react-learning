@@ -1,5 +1,15 @@
 import React,{useEffect,useState} from 'react';
-
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
+import $ from 'jquery'; 
+import ButtonGroup from 'rsuite/ButtonGroup';
+  
+import FileUploadIcon from '@rsuite/icons/FileUpload';
+import OffRoundIcon from '@rsuite/icons/OffRound';
+import SendIcon from '@rsuite/icons/Send';
+import "rsuite/dist/rsuite.min.css";
+import TrashIcon from '@rsuite/icons/Trash';
+import IconButton from 'rsuite/IconButton';
 
 export default function Admin(props) {
     
@@ -11,6 +21,12 @@ useEffect(() => {
         res.json().then((jsondata) => {setJson(jsondata['data']);
         })
     );
+    $(document).ready(function () {
+      setTimeout(function(){
+      $('#example').DataTable();
+       } ,1000);
+  });
+  
 }, []);
 
 
@@ -70,8 +86,11 @@ const getHeader=()=>{return (
                     
                   }
                   if (arr.length!=0){
-                    arr.push(<th scope='col'><button type="button" onClick={() =>handleonDelete(data_obj)} className="btn btn-danger">Delete Record</button></th>)
-                  arr1.push(<tr>{arr}</tr>);
+                    // arr.push(<th scope='col'><button type="button" onClick={() =>handleonDelete(data_obj)} className="btn btn-danger"><i className="bi bi-trash">Delete Record</i></button></th>)
+                    arr.push(<th scope='col'> <IconButton icon={<TrashIcon />}   appearance="primary" color="red" onClick={() =>handleonDelete(data_obj)} ></IconButton></th>)
+                    // arr.push(<th scope='col'><a className="delete" title="Delete" data-toggle="tooltip"><i className="material-icons">&#xE872;</i></a></th>)
+                   
+                    arr1.push(<tr  >{arr}</tr>);
                   
                   }
                   
@@ -88,10 +107,18 @@ const getHeader=()=>{return (
 
 
 return (
-<div className='container my-3'>
-<h1 >TEST API</h1>
-<div className='container my-3'>
-<table className="table table-bordered">
+<div className="container-lg">
+    <div className="table-responsive">
+        <div className="table-wrapper">
+            <div className="table-title">
+                <div className="row">
+                    <div className="col-sm-8"><h2>Employee <b>Details</b></h2></div>
+                    <div className="col-sm-4">
+                        <button type="button" className="btn btn-info add-new"><i className="fa fa-plus"></i> Add New</button>
+                    </div>
+                </div>
+            </div>
+<table id="example"  className="table table-bordered">
 <thead className="thead-dark">
 <tr className='table-dark' >
   {getHeader()}
@@ -102,8 +129,9 @@ return (
 {createTable()}
 
 </tbody>
-</table> 
-</div> 
-</div>
+        </table>
+        </div>
+    </div>
+</div>    
 );
 }
