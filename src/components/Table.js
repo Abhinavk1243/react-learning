@@ -1,12 +1,54 @@
 import React,{useEffect,useState} from 'react';
-// import "ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"
-// import "datatables.net-dt/css/jquery.dataTables.min.css"
+import {useNavigate} from "react-router-dom"
+import axios from 'axios';
 import $ from 'jquery'; 
 
 
 export default function Table(props) {
     
     const [jsonData,setJson]=useState([]);
+    const [inputs, setInputs] = useState({});
+    const [resp,setResponse] =useState({});
+    const navigate = useNavigate();
+    async function fetchData() {
+      const buf = Buffer.from(JSON.stringify({inputs}['inputs']))
+      console.log({inputs})
+      
+        const res  = await axios.post(
+          'student/',
+          // JSON.stringify({inputs}['inputs'])
+          JSON.parse(buf.toString())
+        )
+        console.log(res)
+        setResponse(res);
+        // console.log({resp});
+        
+        
+      }
+      useEffect(() => {
+        fetchData()
+      }, [])
+    
+   const handleonSubmit = () => {
+    
+    // event.preventDefault();
+    // console.log('hee')
+    fetchData()
+    console.log({resp})
+    navigate('/testapi');
+       
+    }      
+    
+       
+    const handleChange=(event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        console.log(name)
+        console.log(value)
+
+        setInputs(values => ({...values, [name]: value}))
+    }
+    
 
 
 useEffect(() => {
@@ -21,11 +63,28 @@ useEffect(() => {
         $(".add-new").click(function(){
         $(this).attr("disabled", "disabled");
         var index = $("table tbody tr:last-child").index();
+        // var htm = $("table tbody tr:last-child td:last-child").html()
+        // console.log(htm.length);
+        // console.log($('table').children('tbody').children('tr').children('td'))
+        // console.log($("table td ").length)
+        // console.log($("table th ").length)
+        // console.log()
+        
+        
+        // <input 
+        //   type="number" 
+        //   name="student_age" 
+        //   value={inputs.student_age} 
+        //   onChange={handleChange}
+        // />
             var row = '<tr>' +
-                '<td><input type="text" className="form-control" name="name" id="name"></td>' +
-                '<td><input type="text" className="form-control" name="department" id="department"></td>' +
-                '<td><input type="text" className="form-control" name="phone" id="phone"></td>' +
-          '<td>' + actions + '</td>' +
+                '<td>--/--</td>' +
+                `<td><input  type="number" className="form-control" name="student_age"  value=${inputs.student_age} onChange=${handleChange}/></td>` 
+                +
+                '<td>--/--</td>' 
+                {`<td><input type="text" className="form-control" name="student_name"  value=${inputs.student_name} onChange=${handleChange}></td>`}
+                +
+          '<td>' + $("table td:last-child").html() + '</td>' +
             '</tr>';
           $("table").append(row);		
         $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
@@ -33,24 +92,26 @@ useEffect(() => {
         });
       // Add row on add button click
       $(document).on("click", ".add", function(){
-        var empty = false;
-        var input = $(this).parents("tr").find('input[type="text"]');
-            input.each(function(){
-          if(!$(this).val()){
-            $(this).addClass("error");
-            empty = true;
-          } else{
-                    $(this).removeClass("error");
-                }
-        });
-        $(this).parents("tr").find(".error").first().focus();
-        if(!empty){
-          input.each(function(){
-            $(this).parent("td").html($(this).val());
-          });			
-          $(this).parents("tr").find(".add, .edit").toggle();
-          $(".add-new").removeAttr("disabled");
-        }		
+        handleonSubmit()
+        // var empty = false;
+        // var input = $(this).parents("tr").find('input[type="text"]');
+        // console.log(input)
+        //     input.each(function(){
+        //   if(!$(this).val()){
+        //     $(this).addClass("error");
+        //     empty = true;
+        //   } else{
+        //             $(this).removeClass("error");
+        //         }
+        // });
+        // $(this).parents("tr").find(".error").first().focus();
+        // if(!empty){
+        //   input.each(function(){
+        //     $(this).parent("td").html($(this).val());
+        //   });			
+        //   $(this).parents("tr").find(".add, .edit").toggle();
+        //   $(".add-new").removeAttr("disabled");
+        // }		
         });
       // Edit row on edit button click
       $(document).on("click", ".edit", function(){		
@@ -125,8 +186,13 @@ const getHeader=()=>{return (
                     
                   }
                   if (arr.length!=0){
-                    arr.push(<th scope='col'><button type="button" onClick={() =>handleonDelete(data_obj)} className="btn btn-danger">Delete Record</button></th>)
-                  arr1.push(<tr  >{arr}</tr>);
+                    // arr.push(<th scope='col'><button type="button" onClick={() =>handleonDelete(data_obj)} className="btn btn-danger">Delete Record</button></th>)
+                   arr.push(<td>
+                    <a className="add" title="Add" data-toggle="tooltip"><i className="material-icons">&#xE03B;</i></a>
+                    <a className="edit" title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></a>
+                    <a className="delete" title="Delete" data-toggle="tooltip"><i className="material-icons">&#xE872;</i></a>
+                </td>)
+                    arr1.push(<tr  >{arr}</tr>);
                   
                   }
                   
@@ -150,22 +216,25 @@ return (
             <div className="table-title">
                 <div className="row">
                     <div className="col-sm-8"><h2>Employee <b>Details</b></h2></div>
+                     {/* <h1>{inputs}</h1> */}
                     <div className="col-sm-4">
                         <button type="button" className="btn btn-info add-new"><i className="fa fa-plus"></i> Add New</button>
                     </div>
                 </div>
             </div>
+           
             <table className="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        {/* <th>Name</th>
                         <th>Department</th>
                         <th>Phone</th>
-                        <th>Actions</th>
+                        <th>Actions</th> */}
+                        {getHeader()}
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    {/* <tr>
                         <td>John Doe</td>
                         <td>Administration</td>
                         <td>(171) 555-2222</td>
@@ -194,7 +263,8 @@ return (
                             <a className="edit" title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></a>
                             <a className="delete" title="Delete" data-toggle="tooltip"><i className="material-icons">&#xE872;</i></a>
                         </td>
-                    </tr>      
+                    </tr>       */}
+                    {createTable()}
                 </tbody>
             </table>
         </div>

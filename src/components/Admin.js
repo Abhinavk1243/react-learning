@@ -10,25 +10,25 @@ import SendIcon from '@rsuite/icons/Send';
 import "rsuite/dist/rsuite.min.css";
 import TrashIcon from '@rsuite/icons/Trash';
 import IconButton from 'rsuite/IconButton';
+import EditIcon from '@rsuite/icons/Edit';
 
 export default function Admin(props) {
     
     const [jsonData,setJson]=useState([]);
 
 
-useEffect(() => {
-    fetch("/student/").then((res) =>
-        res.json().then((jsondata) => {setJson(jsondata['data']);
-        })
-    );
-    $(document).ready(function () {
-      setTimeout(function(){
-      $('#example').DataTable();
-       } ,1000);
-  });
-  
-}, []);
-
+    useEffect(() => {
+      fetch("/student/").then((res) =>
+          res.json().then((jsondata) => {setJson(jsondata['data']);
+          })
+      );
+      $(document).ready(function () {
+        setTimeout(function(){
+        $('#example').DataTable();
+         } ,1000);
+    });
+    
+  }, []);
 
 const getHeader=()=>{return (
     <>
@@ -45,6 +45,7 @@ const getHeader=()=>{return (
               }
             }
             arr.push(<th scope='col'>Delete</th>)
+            arr.push(<th scope='col'>Edit</th>)
             
            
             return arr;}
@@ -57,9 +58,15 @@ const getHeader=()=>{return (
 
   const createTable=()=>{ 
     const handleonDelete=(data)=>{
+      console.log('in delete ')
         console.log(data);
         
-    }
+    };
+    const handleonEdit=(data)=>{
+      console.log('in edit')
+      console.log(data);
+
+    };
     
       return (
         <>
@@ -87,7 +94,8 @@ const getHeader=()=>{return (
                   }
                   if (arr.length!=0){
                     // arr.push(<th scope='col'><button type="button" onClick={() =>handleonDelete(data_obj)} className="btn btn-danger"><i className="bi bi-trash">Delete Record</i></button></th>)
-                    arr.push(<th scope='col'> <IconButton icon={<TrashIcon />}   appearance="primary" color="red" onClick={() =>handleonDelete(data_obj)} ></IconButton></th>)
+                    arr.push(<th align='center'><IconButton icon={<TrashIcon />}   appearance="primary" color="red" onClick={() =>handleonDelete(data_obj)} ></IconButton></th>)
+                    arr.push(<th align='center'><IconButton icon={<EditIcon />}   color="yellow" appearance="primary" onClick={() =>handleonEdit(data_obj)} ></IconButton></th>)
                     // arr.push(<th scope='col'><a className="delete" title="Delete" data-toggle="tooltip"><i className="material-icons">&#xE872;</i></a></th>)
                    
                     arr1.push(<tr  >{arr}</tr>);

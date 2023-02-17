@@ -37,8 +37,7 @@ export default function Form() {
     const handleChange=(event) => {
         const name = event.target.name;
         const value = event.target.value;
-        // console.log(name);
-        // console.log(value);
+
         setInputs(values => ({...values, [name]: value}))
     }
     
@@ -51,7 +50,7 @@ export default function Form() {
             </FlashMessage>
         </div>
    } */}
-  
+{/*   
       <form onSubmit={handleonSubmit}>
       <label>Enter your name:
       <input 
@@ -70,8 +69,34 @@ export default function Form() {
         />
         </label>
         <input type="submit" />
-    </form>
+    </form> */}
+    <div className="container my-3">
+    <form className="needs-validation" novalidate onSubmit={handleonSubmit}>
+  <div className="form-row">
+    <div className="col-md-4 mb-3">
+      <label htmlFor="validationTooltip01">Student name</label>
+      <input type="text" className="form-control" name="student_name"  onChange={handleChange} id="validationTooltip01" placeholder="First name" value={inputs.student_name} required/>
+      <div className="valid-tooltip">
+        Looks good!
+      </div>
+    </div>
+   
+    
+  </div>
+  <div className="form-row">
+    <div className="col-md-6 mb-3">
+      <label htmlFor="validationTooltip03">Student Age</label>
+      <input type="number" className="form-control" name="student_age"  value={inputs.student_age}  id="validationTooltip03"  onChange={handleChange}  placeholder='0' required/>
+      <div className="invalid-tooltip">
+        Please provide a valid city.
+      </div>
+    </div>
+    
+  </div>
+  <button className="btn btn-primary" type="submit">Submit form</button>
+</form>
       
+    </div>
     </div>
   )
 }

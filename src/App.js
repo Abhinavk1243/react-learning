@@ -14,7 +14,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Table from './components/Table';
+// import Table from './components/Table';
 // import Datatable from './components/Table';
 
 function App() {
