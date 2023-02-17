@@ -16,7 +16,7 @@ export default function Admin(props) {
     
     const [jsonData,setJson]=useState([]);
 
-
+    console.log('heel')
     useEffect(() => {
       fetch("/student/").then((res) =>
           res.json().then((jsondata) => {setJson(jsondata['data']);
